@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#243A4D" />
+
+    <!--
+      Fallback metadata for crawlers and link previews that do not run JavaScript.
+      Each page sets its own title/description/OG tags at runtime through src/seo/.
+    -->
+    <title>Conversions | No.1 Performance Marketing Agency In Delhi NCR.</title>
+    <meta
+      name="description"
+      content="Conversions is a performance marketing agency specializing in Meta Ads, Google Ads, to generate quality leads, sales, and profitable revenue."
+    />
+
+    <!-- Start connecting to the image CDN early (hero photo is above the fold) -->
+    <link rel="preconnect" href="https://images.unsplash.com" />
+
+    <!-- Preload fonts used above the fold (headline + body) -->
+    <link rel="preload" href="/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  </head>
+  <body>
+    <!--
+      Intro screen: logo with a spinning ring for ~2 seconds on the first
+      visit of a browser session, then fades out (see src/main.jsx).
+      Plain HTML + CSS so it shows instantly, before any JavaScript loads.
+    -->
+    <div id="splash" aria-hidden="true">
+      <div class="splash-ring"><span></span><img src="/logo.webp" alt="" width="300" height="103" /></div>
+    </div>
+    <script>
+      try {
+        if (sessionStorage.getItem('splash-seen')) document.getElementById('splash').remove();
+      } catch (e) {}
+    </script>
+    <style>
+      #splash { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; background: #fff; transition: opacity .45s ease, visibility .45s ease; }
+      #splash.is-hidden { opacity: 0; visibility: hidden; }
+      .splash-ring { position: relative; display: grid; place-items: center; width: 190px; height: 190px; }
+      .splash-ring img { width: 130px; height: auto; }
+      .splash-ring span { position: absolute; inset: 0; border-radius: 50%; border: 3px solid rgba(249, 76, 48, .15); border-top-color: #f94c30; border-right-color: #0e0b35; animation: splash-spin .9s linear infinite; }
+      @keyframes splash-spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { .splash-ring span { animation-duration: 2.4s; } }
+    </style>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

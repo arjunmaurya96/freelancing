@@ -1,0 +1,321 @@
+/* HOME PAGE — custom styles that Tailwind classes can't express neatly. */
+
+@layer components {
+  /* ---------- Hero ---------- */
+  .hero-v2 {
+    background: var(--color-navy);
+  }
+
+
+  .hero-v2-in {
+    animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .glass-stat {
+    background: rgb(10 10 35 / 0.78);
+    border: 1px solid rgb(255 255 255 / 0.18);
+    color: #fff;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.15),
+      0 18px 40px -22px rgb(14 11 53 / 0.7);
+    transition: transform 0.3s ease;
+  }
+  .glass-stat:hover {
+    transform: translateY(-4px);
+  }
+
+  .hero-cta-pulse {
+    animation: cta-pulse 2.6s ease-out infinite;
+  }
+
+  /* ---------- About: honeycomb pattern ---------- */
+  .honeycomb {
+    background-color: #fff;
+    /* Smaller hexagon cells, drawn a little darker so the pattern reads clearly. */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='98' viewBox='0 0 56 98'%3E%3Cpath d='M28 66 0 50V18L28 2l28 16v32L28 66zm0 32V66m0-64V-30' fill='none' stroke='%230e0b35' stroke-opacity='0.13' stroke-width='2'/%3E%3C/svg%3E");
+    background-size: 30px 52.5px;
+  }
+
+  .float-chip {
+    animation: float-y 5s ease-in-out infinite;
+  }
+
+  /* ---------- Results arches (rise when the row scrolls into view) ---------- */
+  .arch-rise {
+    transform-origin: bottom;
+  }
+  .reveal-ready [data-reveal] .arch-rise {
+    opacity: 0;
+    transform: scaleY(0.45);
+    transition:
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms),
+      opacity 0.6s ease var(--d, 0ms);
+  }
+  .reveal-ready [data-reveal].is-visible .arch-rise {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ---------- Why choose us: big question mark ---------- */
+  .qmark {
+    display: inline-block;
+    animation: qmark-tilt 6s ease-in-out infinite;
+    text-shadow: 0 20px 40px rgb(249 76 48 / 0.25);
+  }
+
+  /* ---------- CTA card line art ---------- */
+  .cta-lines path {
+    stroke-dasharray: 6 0;
+    animation: cta-sway 9s ease-in-out infinite alternate;
+  }
+  .cta-lines path:nth-child(2n) {
+    animation-duration: 12s;
+  }
+}
+
+@keyframes cta-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(249 76 48 / 0.55);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 16px rgb(249 76 48 / 0);
+  }
+}
+@keyframes qmark-tilt {
+  0%,
+  100% {
+    transform: rotate(-8deg) translateY(0);
+  }
+  50% {
+    transform: rotate(6deg) translateY(-10px);
+  }
+}
+@keyframes cta-sway {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(24px);
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-v2-in,
+  .hero-cta-pulse,
+  .float-chip,
+  .qmark,
+  .cta-lines path {
+    animation: none !important;
+  }
+  .reveal-ready [data-reveal] .arch-rise {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Hero landmark carousel: hidden scrollbar, grab cursor, arrow buttons. */
+@layer components {
+  .hero-carousel-track {
+    scrollbar-width: none;
+    cursor: grab;
+  }
+  .hero-carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+  .hero-carousel-track.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+  .hero-carousel-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    display: none;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-top: -1.25rem;
+    border-radius: 999px;
+    background: rgb(0 0 0 / 0.4);
+    color: #fff;
+    border: 1px solid rgb(255 255 255 / 0.45);
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .hero-carousel-arrow:hover {
+    background: var(--color-brand);
+    color: #fff;
+  }
+  @media (max-width: 639px) {
+    .hero-carousel-arrow {
+      width: 2.1rem;
+      height: 2.1rem;
+    }
+  }
+}
+
+/* Services grid card: lifts up-left on hover with a soft drop shadow. */
+@layer components {
+  .svc-card {
+    position: relative;
+    background: transparent;
+    outline: 1px solid transparent;
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.35s ease,
+      background-color 0.35s ease,
+      outline-color 0.35s ease;
+  }
+  .svc-card:hover,
+  .svc-card:focus-visible {
+    transform: translate(-4px, -4px);
+    background: var(--color-navy);
+    outline-color: rgb(255 255 255 / 0.35);
+    box-shadow:
+      5px 5px 0 0 rgb(249 76 48 / 0.5),
+      12px 16px 32px -12px rgb(0 0 0 / 0.75);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .svc-card:hover,
+  .svc-card:focus-visible {
+    transform: none;
+  }
+}
+
+/* Hand-drawn Dubai skyline behind the hero; each line draws itself in once. */
+@layer components {
+  .hero-skyline {
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: -1;
+    width: 100%;
+    height: clamp(120px, 16vw, 230px);
+    color: #fff;
+    opacity: 0.22;
+    pointer-events: none;
+  }
+  .hero-skyline .sk {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: sk-draw 2.8s cubic-bezier(0.45, 0, 0.2, 1) 0.4s forwards;
+  }
+  .hero-skyline .sk-thin {
+    stroke-width: 1;
+    animation-delay: 1.4s;
+  }
+}
+@keyframes sk-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-skyline .sk {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* About stat chips sit still under the photo on mobile/tablet. */
+@media (max-width: 1023px) {
+  .about-chips .float-chip {
+    animation: none;
+  }
+}
+
+/* Trusted by Brands rows: top row slides left, bottom row slides right. */
+@keyframes clients-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+@keyframes clients-right {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .clients-row-left {
+    animation: clients-left 70s linear infinite;
+  }
+  .clients-row-right {
+    animation: clients-right 70s linear infinite;
+  }
+}
+
+/* Phones: swipe instead of arrows (keeps the headline clear). */
+@media (max-width: 639px) {
+  .hero-carousel-arrow {
+    display: none;
+  }
+}
+
+/* Hero "video" feel: the visible photo slowly zooms and pans (Ken Burns). */
+@keyframes hero-kb {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.06) translate3d(-1%, -0.5%, 0);
+  }
+}
+@keyframes hero-kb-alt {
+  from {
+    transform: scale(1.06) translate3d(1%, 0.5%, 0);
+  }
+  to {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+@layer components {
+  .hero-kb {
+    transform-origin: center;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-kb.is-active {
+    animation: hero-kb 9s ease-out both;
+  }
+  .hero-kb-alt.is-active {
+    animation-name: hero-kb-alt;
+  }
+}
+
+/* Hero arrows: desktop only (phones swipe). */
+@media (min-width: 1024px) {
+  .hero-carousel-arrow {
+    display: grid;
+  }
+}
+
+/* Pencil Dubai skyline band directly below the hero. */
+@layer components {
+  .skyline-band {
+    position: relative;
+    height: clamp(110px, 15vw, 210px);
+    overflow: hidden;
+    background: linear-gradient(180deg, #eef3fc 0%, #ffffff 100%);
+  }
+  .skyline-band .hero-skyline {
+    z-index: 0;
+    height: 100%;
+    color: var(--color-navy);
+    opacity: 0.4;
+  }
+}
